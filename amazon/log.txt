@@ -1,0 +1,46 @@
+INFO: Scrapy 1.0.4 started (bot: amazon)
+INFO: Optional features available: ssl, http11
+INFO: Overridden settings: {'NEWSPIDER_MODULE': 'amazon.spiders', 'DUPEFILTER_CLASS': 'scrapy.dupefilters.BaseDupeFilter', 'SPIDER_MODULES': ['amazon.spiders'], 'BOT_NAME': 'amazon', 'LOGSTATS_INTERVAL': 0, 'DEFAULT_ITEM_CLASS': 'amazon.items.AmazonItem'}
+INFO: Enabled extensions: CloseSpider, TelnetConsole, CoreStats, SpiderState
+INFO: Enabled downloader middlewares: HttpAuthMiddleware, DownloadTimeoutMiddleware, UserAgentMiddleware, RetryMiddleware, DefaultHeadersMiddleware, MetaRefreshMiddleware, HttpCompressionMiddleware, RedirectMiddleware, CookiesMiddleware, ChunkedTransferMiddleware, DownloaderStats
+INFO: Enabled spider middlewares: HttpErrorMiddleware, OffsiteMiddleware, RefererMiddleware, UrlLengthMiddleware, DepthMiddleware
+INFO: Enabled item pipelines: AmazonPipeline
+DEBUG: Telnet console listening on 127.0.0.1:6023
+INFO: Spider opened
+DEBUG: Crawled (200) <GET http://www.amazon.cn> (referer: None)
+INFO: Scrapy 1.0.4 started (bot: amazon)
+INFO: Optional features available: ssl, http11
+INFO: Overridden settings: {'NEWSPIDER_MODULE': 'amazon.spiders', 'DUPEFILTER_CLASS': 'scrapy.dupefilters.BaseDupeFilter', 'SPIDER_MODULES': ['amazon.spiders'], 'BOT_NAME': 'amazon', 'LOGSTATS_INTERVAL': 0, 'DEFAULT_ITEM_CLASS': 'amazon.items.AmazonItem'}
+INFO: Enabled extensions: CloseSpider, TelnetConsole, CoreStats, SpiderState
+INFO: Enabled downloader middlewares: HttpAuthMiddleware, DownloadTimeoutMiddleware, UserAgentMiddleware, RetryMiddleware, DefaultHeadersMiddleware, MetaRefreshMiddleware, HttpCompressionMiddleware, RedirectMiddleware, CookiesMiddleware, ChunkedTransferMiddleware, DownloaderStats
+INFO: Enabled spider middlewares: HttpErrorMiddleware, OffsiteMiddleware, RefererMiddleware, UrlLengthMiddleware, DepthMiddleware
+INFO: Enabled item pipelines: AmazonPipeline
+DEBUG: Telnet console listening on 127.0.0.1:6023
+INFO: Spider opened
+DEBUG: Redirecting (302) to <GET http://www.amazon.cn/ref=nb_sb_noss_null> from <GET http://www.amazon.cn/s?ie=UTF8>
+DEBUG: Redirecting (301) to <GET http://www.amazon.cn> from <GET http://www.amazon.cn/ref=nb_sb_noss_null>
+DEBUG: Crawled (200) <GET http://www.amazon.cn> (referer: None)
+WARNING: <string>:1: ScrapyDeprecationWarning: "sel" shortcut is deprecated. Use "response.xpath()", "response.css()" or "response.selector" instead
+
+INFO: Scrapy 1.0.4 started (bot: amazon)
+INFO: Optional features available: ssl, http11
+INFO: Overridden settings: {'NEWSPIDER_MODULE': 'amazon.spiders', 'DUPEFILTER_CLASS': 'scrapy.dupefilters.BaseDupeFilter', 'SPIDER_MODULES': ['amazon.spiders'], 'BOT_NAME': 'amazon', 'LOGSTATS_INTERVAL': 0, 'DEFAULT_ITEM_CLASS': 'amazon.items.AmazonItem'}
+INFO: Enabled extensions: CloseSpider, TelnetConsole, CoreStats, SpiderState
+INFO: Enabled downloader middlewares: HttpAuthMiddleware, DownloadTimeoutMiddleware, UserAgentMiddleware, RetryMiddleware, DefaultHeadersMiddleware, MetaRefreshMiddleware, HttpCompressionMiddleware, RedirectMiddleware, CookiesMiddleware, ChunkedTransferMiddleware, DownloaderStats
+INFO: Enabled spider middlewares: HttpErrorMiddleware, OffsiteMiddleware, RefererMiddleware, UrlLengthMiddleware, DepthMiddleware
+INFO: Enabled item pipelines: AmazonPipeline
+DEBUG: Telnet console listening on 127.0.0.1:6023
+INFO: Spider opened
+DEBUG: Crawled (200) <GET http://news.cnblogs.com/> (referer: None)
+INFO: Scrapy 1.0.4 started (bot: amazon)
+INFO: Optional features available: ssl, http11
+INFO: Overridden settings: {'NEWSPIDER_MODULE': 'amazon.spiders', 'DUPEFILTER_CLASS': 'scrapy.dupefilters.BaseDupeFilter', 'SPIDER_MODULES': ['amazon.spiders'], 'BOT_NAME': 'amazon', 'LOGSTATS_INTERVAL': 0, 'DEFAULT_ITEM_CLASS': 'amazon.items.AmazonItem'}
+INFO: Enabled extensions: CloseSpider, TelnetConsole, CoreStats, SpiderState
+INFO: Enabled downloader middlewares: HttpAuthMiddleware, DownloadTimeoutMiddleware, UserAgentMiddleware, RetryMiddleware, DefaultHeadersMiddleware, MetaRefreshMiddleware, HttpCompressionMiddleware, RedirectMiddleware, CookiesMiddleware, ChunkedTransferMiddleware, DownloaderStats
+INFO: Enabled spider middlewares: HttpErrorMiddleware, OffsiteMiddleware, RefererMiddleware, UrlLengthMiddleware, DepthMiddleware
+INFO: Enabled item pipelines: AmazonPipeline
+DEBUG: Telnet console listening on 127.0.0.1:6023
+INFO: Spider opened
+DEBUG: Redirecting (302) to <GET http://www.amazon.cn/ref=nb_sb_noss_null> from <GET http://www.amazon.cn/s?ie=UTF8>
+DEBUG: Redirecting (301) to <GET http://www.amazon.cn> from <GET http://www.amazon.cn/ref=nb_sb_noss_null>
+DEBUG: Crawled (200) <GET http://www.amazon.cn> (referer: None)
