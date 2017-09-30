@@ -1,0 +1,38 @@
+update english set phonetic = "['bnd()n] # ['bndn]", set wordGroup = "
+with abandon
+                                                                                恣意地，放纵地
+                                                 # 
+abandon ship
+                                                                                弃船
+                                                ", set example = "
+
+Only they will not abandon me, only they will not betray.
+
+
+只有它们不会遗弃我，只有它们不会背叛。
+
+
+blog.sina.com.cn
+
+
+
+Finding himself under fire from all quarters, he had no alternative but to abandon his scheme for the time being.
+
+
+在这四面楚歌的情况下， 他没有别的办法， 只好暂时放弃他的计划。
+
+
+《新英汉大辞典》
+
+
+
+But why should they? Why should China abandon a trade policy that is working marvelously well for them, and adopt a trade policy that is failing dismally for us?
+
+
+但是他们为什么要这么做呢，为什么中国应该放弃对他们特别适用的贸易政策而采取一种惨败的贸易政策，那说得过去吗？
+
+
+article.yeeyan.org
+
+
+" where id = "1"
