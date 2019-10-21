@@ -178,7 +178,7 @@ w3lib==1.17.0
 wcwidth==0.1.7
 web.py==0.40.dev0
 webencodings==0.5.1
-Werkzeug==0.11.15
+Werkzeug==0.15.3
 Whoosh==2.7.4
 widgetsnbextension==2.0.0
 wrapt==1.10.8
