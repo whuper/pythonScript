@@ -26,7 +26,7 @@ cssselect==1.0.1
 daemon==1.1
 decorator==4.0.11
 display==1.0.0
-Django==1.11
+Django==1.11.28
 docutils==0.13.1
 EasyProcess==0.2.3
 entrypoints==0.2.2
