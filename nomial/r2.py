@@ -1,5 +1,7 @@
 import random
 import string
+import openpyxl as op
+import os, sys
 
 ###################产生2个以上随机整数###################
 ###################第一个数随机产生，第二个使用平均数求出###################
@@ -7,6 +9,26 @@ import string
 #average 平均数
 #begin 起始区间
 #end 结束区间
+
+def int_random_old (average, begin, end):
+
+    numarr = [];
+
+    while (1):
+
+        num_first = random.randint(begin, end);
+        num_second = average * 2 - num_first;
+
+        if (num_second >= begin and num_second <= end):
+            numarr.append(num_first);
+            numarr.append(num_second);
+            break
+        # else:
+            # print("num_second: " + str(num_second))
+
+    return numarr;
+
+
 def int_random (average, begin, end):
 
     #print "wzh_random"
@@ -28,6 +50,8 @@ def int_random (average, begin, end):
         numarr.append(num_second);
     else:
         # 继续分配,分为三个数
+        # 12 -1 ==11 ; 11+4 = 15
+        # 15 -3 ==12 ; 12+5 = 17
         rest_val_temp = average * 3 - num_first
 
         restTwo = re_random(rest_val_temp, begin, end,average)
@@ -126,48 +150,104 @@ def show_list (list):
 
 ###################主函数调用产生整形随机数###################
 
-def test_random_int():
-    count = 121;
-    average = 4;
-    begin = 1;
-    end = 5;
-    numarr_count = 0;
-    numarr = [0 for x in range(count)];
-    # for i in range (count // 2):
-    while(numarr_count < count):
-        templist = int_random (average, begin, end)
-        j = 0;
-        for j in range (len(templist)):
-             numarr[numarr_count] = templist[j];
-             numarr_count += 1;
+def test_random_int(ava):
+    
+    realAverage = ava
 
     
-    print("修正前 ######：")
-    show_list (numarr)
+    if(int(ava) ==4):
+        begin = 4
+        end = 5
+    elif(int(ava) == 3):
+        begin = 3
+        end = 4
+    elif(int(ava) == 2):
+        begin = 2
+        end = 3
+
+    
+    # 对平均数取整以后，要对平均数进行调整 5的话不出现begin=2, 3的话end =4
+    average = round(realAverage)
+    print(str(realAverage) + " >>>>>> " + str(average) )
+    count = 121;
+    # begin = 3;
+    # end = 4;
+    numarr_count = 0;
+    numarr = [0 for x in range(count)];
+
+    
+    print("begin："+ str(begin))
+    print("end："+ str(end))
+
+    # for i in range (count // 2):
+    while(numarr_count < count):
+        templist = int_random_old (average, begin, end)
+        j = 0;
+        for j in range (len(templist)):
+            # numarr_count 有可能大于120
+            if numarr_count < count:
+                numarr[numarr_count] = templist[j]
+                numarr_count += 1
+            else:
+                print('注意!!!!!: numarr_count: ' + str(numarr_count))
+                break;
+
+    
+    # print("修正前 ######：")
+    # show_list (numarr)
+
     # 数据修正开始
     #if (count % 2) != 0:
      #   numarr[count-1] = random.randint(begin, end);
 
     t_average2 = round(sum(numarr)/count,4)
-    if(  t_average2 < average):
+    # 平均数差值
+    gapValue = round( realAverage - t_average2,4)
+    if(  gapValue != 0):
         # 差了多少没有分配
-        undistributed = round(count * round((average - t_average2),4),4)
+        undistributed = round(count * gapValue,4)
         print("undistributed: " + str(undistributed))
-        # if(undistributed <= end):
-        # numarr[count-1] = int(undistributed)
-        # else:
+        # 四舍五入取整
+        undistributed = round(undistributed)
 
+        # 分配到每个数里去,多退少补
+        if(undistributed > 0):
+            for x in range(len(numarr)):
+                # undistributed 用完的时候跳出
+                if(undistributed <= 0):
+                    print("undistributed 剩余: " + str(undistributed))
+                    break;
+                if (numarr[x] < end):
+                    numarr[x]  +=1
+                    undistributed -=1
+        else:
+             for x in range(len(numarr)):
+                # undistributed 用完的时候跳出
+                if(undistributed >= 0):
+                    print("undistributed 剩余: " + str(undistributed))
+                    break;
+                if (numarr[x] > begin or numarr[x] == 5):
+                    numarr[x]  -=1
+                    undistributed +=1
+    # 从小到大排序
+    numarr = sorted(numarr)
+    # 数据打乱
+    # random.shuffle(numarr);
+    return numarr;
 
-        
-    
+          
+
+    # if(undistributed <= end):
+    # numarr[count-1] = int(undistributed)
+    # else:
 
 
              
     content = '';
     #打乱排序
-    print("修正后 ######：")
-    print("数据未打乱：");
-    show_list (numarr)
+    # print("修正后 ######：")
+    # print("数据未打乱：");
+    # show_list (numarr)
     """     
     random.shuffle(numarr);
         print("数据打乱：");
@@ -178,7 +258,7 @@ def test_random_int():
     #print content;
     #追加写入文件
     filename = "test3.txt";
-    print("文件名称：",filename);
+    # print("文件名称：",filename);
     write_file (filename, content)
     write_file (filename, "\n");
 
@@ -214,6 +294,21 @@ def test_random_float():
     write_file (filename, "\n");
 
 #调用测试产生整形随机数
-test_random_int();
+# test_random_int(3.6158);
 #调用测试产生实型随机数
 # test_random_float();
+# sys.exit(0)
+expectList = [4.7678,3.6186,4.2126,4.645,3.6186,4.2086,4.3846,4.2955,3.9666,4.0586,4.2747,4.5946,4.2701,3.9326,4.2927,4.4814,3.9269,4.5673,4.2785,3.8283,4.4761,4.4532,4.4108]
+bg = op.load_workbook(r"data_1.xlsx")    
+
+for colIndex in range(len(expectList)):
+
+    resultColum = test_random_int(expectList[colIndex]) 
+    
+    sheet = bg["Sheet1"]                             		 
+    for row in range(len(resultColum)):						
+        sheet.cell(row+1 , colIndex + 1, resultColum[row])	# sheet.cell(1,1,num_list[0])表示将num_list列表的第0个数据1写入到excel表格的第一行第一列
+    bg.save("data_1.xlsx")            			# 对文件进行保存         
+
+
+# https://blog.csdn.net/l734971107/article/details/109635668
