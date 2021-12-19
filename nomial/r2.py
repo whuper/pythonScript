@@ -142,7 +142,7 @@ def show_list (list):
     t_average = 0.0
 
     t_sum = sum(list)
-    t_average = round(t_sum/121,4)
+    t_average = round(t_sum/151,4)
 
     print("列表的和：" + str(t_sum))
     print("数量："+ str(len(list)));
@@ -169,7 +169,7 @@ def test_random_int(ava):
     # 对平均数取整以后，要对平均数进行调整 5的话不出现begin=2, 3的话end =4
     average = round(realAverage)
     print(str(realAverage) + " >>>>>> " + str(average) )
-    count = 121;
+    count = 151;
     # begin = 3;
     # end = 4;
     numarr_count = 0;
@@ -305,7 +305,7 @@ for colIndex in range(len(expectList)):
 
     resultColum = test_random_int(expectList[colIndex]) 
     
-    sheet = bg["Sheet1"]                             		 
+    sheet = bg["Sheet2"]                             		 
     for row in range(len(resultColum)):						
         sheet.cell(row+1 , colIndex + 1, resultColum[row])	# sheet.cell(1,1,num_list[0])表示将num_list列表的第0个数据1写入到excel表格的第一行第一列
     bg.save("data_1.xlsx")            			# 对文件进行保存         
