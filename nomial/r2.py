@@ -2,7 +2,9 @@ import random
 import string
 import openpyxl as op
 import os, sys
+import math
 
+questionnaireCount = 121
 ###################产生2个以上随机整数###################
 ###################第一个数随机产生，第二个使用平均数求出###################
 #count 数字的个数
@@ -142,7 +144,7 @@ def show_list (list):
     t_average = 0.0
 
     t_sum = sum(list)
-    t_average = round(t_sum/151,4)
+    t_average = round(t_sum/questionnaireCount,4)
 
     print("列表的和：" + str(t_sum))
     print("数量："+ str(len(list)));
@@ -150,11 +152,37 @@ def show_list (list):
 
 ###################主函数调用产生整形随机数###################
 
+def dataModify(list):
+    # 生成一个1到4到随机数
+
+
+    lastIndex = len(list) - 1
+    num_begin = random.randint(1, 4);
+
+    """ 
+    num_list = [] 
+    num_list.append(num_begin)
+    num_list.append(num_begin+1)
+    num_list.append(num_begin+2) """
+
+    swapPositions(list,num_begin,lastIndex-num_begin)
+    swapPositions(list,num_begin+1,lastIndex-num_begin-1)
+    swapPositions(list,num_begin+2,lastIndex-num_begin-2)
+
+    return list
+def swapPositions(list, pos1, pos2):
+     
+    list[pos1], list[pos2] = list[pos2], list[pos1]
+    return list
+
 def test_random_int(ava):
     
     realAverage = ava
 
-    
+    begin = math.floor(ava)
+    end = math.ceil(ava)
+
+    """
     if(int(ava) ==4):
         begin = 4
         end = 5
@@ -164,12 +192,24 @@ def test_random_int(ava):
     elif(int(ava) == 2):
         begin = 2
         end = 3
+      
+    #向上取整
+    print math.ceil(num)
 
+    #向下取整
+    print math.floor(num)
+
+    #简单直接取整
+    print int(num)
+
+    #四舍五入取整
+    print round(num) 
+    """
     
     # 对平均数取整以后，要对平均数进行调整 5的话不出现begin=2, 3的话end =4
     average = round(realAverage)
     print(str(realAverage) + " >>>>>> " + str(average) )
-    count = 151;
+    count = questionnaireCount;
     # begin = 3;
     # end = 4;
     numarr_count = 0;
@@ -233,6 +273,10 @@ def test_random_int(ava):
     numarr = sorted(numarr)
     # 数据打乱
     # random.shuffle(numarr);
+
+    # 排序以后在spss里分析，信度会过高，效度分析时关联性太强，无法显示KMO值，因此要稍微弄乱一点
+    # 随机在前五 和 倒数前五个数中 分别抽取3个， 相互调换位置
+    numarr = dataModify(numarr)
     return numarr;
 
           
@@ -298,14 +342,17 @@ def test_random_float():
 #调用测试产生实型随机数
 # test_random_float();
 # sys.exit(0)
-expectList = [4.7678,3.6186,4.2126,4.645,3.6186,4.2086,4.3846,4.2955,3.9666,4.0586,4.2747,4.5946,4.2701,3.9326,4.2927,4.4814,3.9269,4.5673,4.2785,3.8283,4.4761,4.4532,4.4108]
+#expectList = [4.7678,3.6186,4.2126,4.645,3.6186,4.2086,4.3846,4.2955,3.9666,4.0586,4.2747,4.5946,4.2701,3.9326,4.2927,4.4814,3.9269,4.5673,4.2785,3.8283,4.4761,4.4532,4.4108]
+
+perciveList = [2.5332,4.258,3.437,2.6852,4.1787,3.241,3.7591,3.6448,3.372,3.63,4.258,2.8037,3.9104,3.6703,3.8763,3.997,3.7745,3.1142,3.9463,3.6831,3.1383,3.2094,3.3453]
+
 bg = op.load_workbook(r"data_1.xlsx")    
 
-for colIndex in range(len(expectList)):
+for colIndex in range(len(perciveList)):
 
-    resultColum = test_random_int(expectList[colIndex]) 
+    resultColum = test_random_int(perciveList[colIndex]) 
     
-    sheet = bg["Sheet2"]                             		 
+    sheet = bg["perciveList"]                             		 
     for row in range(len(resultColum)):						
         sheet.cell(row+1 , colIndex + 1, resultColum[row])	# sheet.cell(1,1,num_list[0])表示将num_list列表的第0个数据1写入到excel表格的第一行第一列
     bg.save("data_1.xlsx")            			# 对文件进行保存         
