@@ -25,3 +25,10 @@ wordapp.Selection.endkey(6,0) wdStory 为 6 wdMove 为0
 
 这样试试 
 Selection.EndKey (6) Selection.InsertNewPage() Selection.TypeText ("456")
+
+myRange.InsertBefore(translate_results) myRange.InsertBefore('\r\n')
+
+
+
+### Python 使用 win32com 模块对 word 文件进行操作
+https://www.cnblogs.com/zhuminghui/p/11765401.html

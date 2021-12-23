@@ -10,7 +10,7 @@ wordMain = Dispatch('Word.Application')
 
 currrent_path = os.getcwd()
 
-wordMain.Visible = True
+wordMain.Visible = False
 # print(os.getcwd())
 docMain = wordMain.Documents.Open(currrent_path + "/paper_part1.docx")
 docMain.Activate()
@@ -25,6 +25,7 @@ try:
     if(str(table.Style) == "three_line1"):
         print('不需要修改' + str(table.Style))
     else:
+        table.Style = "three_line1"
         print('已修改')
 except:
   print('An exception occurred')
@@ -81,19 +82,21 @@ toc_count = docMain.TablesOfContents.Count  # 判断是否有无目录，如果�
 if toc_count == 0:
     print('还没有目录')
     for i, p in enumerate(docMain.Paragraphs):  # 遍历word中的内容
-        print('查找目录...')
-        if '目录' in p.Range.Text:  # 用于指定目录页面，看下面提示
+        print('查找目录...' + str(i))
+        if '目录占位符' in p.Range.Text:  # 用于指定目录页面，看下面提示
             print('正在生成目录...')
-            p.Range.InsertBreak()
-            p.Range.InsertBreak()
+            # p.Range.InsertBreak()
             # p.Range.InsertParagraphAfter()  # 添加新的段落 （容易出现 被呼叫方拒绝接收呼叫）
             # p.Range.InsertAfter("---")
-            parag_range = docMain.Paragraphs(i+2).Range
-            docMain.TablesOfContents.Add(Range=parag_range,
+            placeholder = p.Range
+
+            # placeholder.InsertBefore('\r\n')
+            docMain.TablesOfContents.Add(Range=placeholder,
                                          UseHeadingStyles=True,
                                          UpperHeadingLevel=1,
                                          LowerHeadingLevel=3)  # 生成目录对象
             # p.Range.InsertParagraphAfter()
+            # placeholder.InsertBreak()
             # 跳出
             break
 
