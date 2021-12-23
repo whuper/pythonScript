@@ -1,0 +1,13 @@
+Windows Registry Editor Version 5.00
+
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\open in git]
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\open in git]
+
+@="Git Bash Here"
+
+"icon"="D:\\Installed\\git\\mingw64\\share\\git\\git-for-windows.ico"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\open in git\command]
+
+@="D:\\Installed\\git\\git-bash.exe"

@@ -22,3 +22,6 @@ output.Application.Selection.Range.InsertFile('first.doc')
 # https://bbs.csdn.net/topics/390966063?list=262329
 
 wordapp.Selection.endkey(6,0) wdStory 为 6 wdMove 为0
+
+这样试试 
+Selection.EndKey (6) Selection.InsertNewPage() Selection.TypeText ("456")
