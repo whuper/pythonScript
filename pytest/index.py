@@ -20,18 +20,19 @@ docMain.Activate()
 wordMain.ActiveDocument.Revisions.AcceptAll()
 
 # 修改所有表格样式为三线表
-try:
-    for table in wordMain.ActiveDocument.Tables:
-        # print(type("three_line1"))
-        if(str(table.Style) == "three_line1"):
-            print('不需要修改:' + str(table.Style))
-        else:
-            table.Style = "three_line1"
-            print('修改成功')
-except:
-    print('An exception occurred')
-else:
-    print('表格样式无异常')
+def tableFormat():
+    try:
+        for table in wordMain.ActiveDocument.Tables:
+            # print(type("three_line1"))
+            if(str(table.Style) == "three_line1"):
+                print('不需要修改:' + str(table.Style))
+            else:
+                table.Style = "three_line1"
+                print('修改成功')
+    except:
+        print('An exception occurred')
+    else:
+        print('表格样式无异常')
 
 
 """ docMain.Close(False)
@@ -40,42 +41,48 @@ sys.exit(0)  """
 
 
 # 复制header文件并插入到头部
+def copyHeader():
+    word1 = win32com.client.DispatchEx('Word.Application')
 
-word1 = win32com.client.DispatchEx('Word.Application')
+    doc_header = word1.Documents.Open(currrent_path + "/header.docx")
+    # 复制word文件的所有内容
+    doc_header.Content.Copy()
+    time.sleep(2)
+    doc_header.Close()
 
-""" doc_header = word1.Documents.Open(currrent_path + "/header.docx")
-# 复制word文件的所有内容
-doc_header.Content.Copy()
-doc_header.Close() """
 
-""" selection = wordMain.Selection
-selection.HomeKey(6, 0)
-selection.InsertBreak()
-selection.HomeKey(6, 0)
-selection.Paste() """
+    selection = wordMain.Selection
+    selection.HomeKey(6, 0)
+    selection.InsertBreak()
+    selection.HomeKey(6, 0)
+    selection.Paste()
 
 
 # 复制footer文件并插入到尾部
+def copyFooter():
+    word2 = win32com.client.DispatchEx('Word.Application')
 
-word2 = win32com.client.DispatchEx('Word.Application')
+    # 打开word文件，经测试要是绝对路径
+    doc_footer = word2.Documents.Open(currrent_path + "/footer.docx")
+    # 复制word文件的所有内容
+    doc_footer.Content.Copy()
+    time.sleep(2)
+    # 关闭小文件
+    doc_footer.Close()
 
-# 打开word文件，经测试要是绝对路径
-doc_footer = word2.Documents.Open(currrent_path + "/footer.docx")
-# 复制word文件的所有内容
-doc_footer.Content.Copy()
-# 关闭小文件
-doc_footer.Close()
+    # doc1.Range().Select()
+    # doc.myRange.Selection.Paste()
 
-# doc1.Range().Select()
-# doc.myRange.Selection.Paste()
+    selection = wordMain.Selection
+    # selection.MoveRight(1, docMain.Content.End) # 将光标移动到文末，就这一步试了我两个多小时
+    # 使用EndKey更快一些
+    selection.EndKey(6,0)
+    selection.InsertBreak()
+    selection.Paste()
 
-# selection = wordMain.Selection
-# selection.MoveRight(1, docMain.Content.End) # 将光标移动到文末，就这一步试了我两个多小时
-# 使用EndKey更快一些
-# selection.EndKey(6,0)
-# selection.InsertBreak()
-# selection.Paste()
-
+tableFormat()
+copyHeader()
+copyFooter()
 
 attempts = 0
 success = False
@@ -102,7 +109,7 @@ if not success:
 if toc_count == 0 and ignoreOutline == False:
     print('还没有目录')
     # for i, p in enumerate(docMain.Paragraphs):  # 遍历word中的内容
-    for i in range(40):
+    for i in range(80):
         print('查找插入目录的段落...' + str(i))
         tempParagraph = docMain.Paragraphs[i]
         if '目录占位符' in tempParagraph.Range.Text:
@@ -134,7 +141,7 @@ if toc_count == 0 and ignoreOutline == False:
 
 try:
     for i, p in enumerate(docMain.Paragraphs):  # 遍历word中的内容
-        print('寻找分页符，再次查找目录...' + str(i))
+        print('寻找分页符，再次查找段落...' + str(i))
         if '分页占位符' in p.Range.Text:
             # p.Range.Collapse()
             print('正在添加分页符...')
@@ -152,7 +159,7 @@ if(ignoreOutline == False and toc_count > 0):
     outline.Update()
 
 wordMain.ActiveDocument.Save()
-time.sleep(1)
+time.sleep(2)
 
 docMain.Close(False)
 wordMain.Application.Quit()
