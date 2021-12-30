@@ -9,6 +9,9 @@ wordMain = Dispatch('Word.Application')
 # 新建word文档
 # doc = word.Documents.Add()
 
+hasHeader = False
+hasFooter = False
+
 currrent_path = os.getcwd()
 
 wordMain.Visible = True
@@ -39,6 +42,7 @@ def tableFormat():
 wordMain.Application.Quit()
 sys.exit(0)  """
 
+selection = wordMain.Selection
 
 # 复制header文件并插入到头部
 def copyHeader():
@@ -50,12 +54,13 @@ def copyHeader():
     time.sleep(2)
     doc_header.Close()
 
-
-    selection = wordMain.Selection
+    # selection = wordMain.Selection
+    # selection.HomeKey(6, 0)
+    # selection.InsertBreak()
     selection.HomeKey(6, 0)
-    selection.InsertBreak()
-    selection.HomeKey(6, 0)
+    time.sleep(1)
     selection.Paste()
+    time.sleep(1)
 
 
 # 复制footer文件并插入到尾部
@@ -73,16 +78,33 @@ def copyFooter():
     # doc1.Range().Select()
     # doc.myRange.Selection.Paste()
 
-    selection = wordMain.Selection
+    # selection = wordMain.Selection
     # selection.MoveRight(1, docMain.Content.End) # 将光标移动到文末，就这一步试了我两个多小时
     # 使用EndKey更快一些
+    time.sleep(0.5)
     selection.EndKey(6,0)
     selection.InsertBreak()
+    time.sleep(0.5)
     selection.Paste()
+    time.sleep(1)
 
-tableFormat()
-copyHeader()
-copyFooter()
+
+
+# 查找是否已经插入过头部了
+mainRange = docMain.Content
+if mainRange.find.Execute('论文题目'):
+    hasHeader = True
+
+if mainRange.find.Execute('访谈记录'):
+    hasFooter = True
+
+if(hasHeader == False):
+    tableFormat()
+
+if hasHeader == False:
+    copyHeader()
+if hasFooter == False:
+    copyFooter()
 
 attempts = 0
 success = False
@@ -109,7 +131,7 @@ if not success:
 if toc_count == 0 and ignoreOutline == False:
     print('还没有目录')
     # for i, p in enumerate(docMain.Paragraphs):  # 遍历word中的内容
-    for i in range(80):
+    for i in range(100):
         print('查找插入目录的段落...' + str(i))
         tempParagraph = docMain.Paragraphs[i]
         if '目录占位符' in tempParagraph.Range.Text:
