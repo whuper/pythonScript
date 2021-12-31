@@ -5,12 +5,21 @@ import win32com
 import win32com.client
 from win32com.client import Dispatch, DispatchEx
 
+
+try:
+ # 脚本名后面接收一个参数，通过sys.argv[1] 获取，参数为1(默认，number)，2，3，4, 等于4的时候会从 【插入目录，分页符】开始
+  start_step = int(sys.argv[1])
+except:
+  start_step = 1
+
+# print(type(start_step))
+# print(start_step)
+
+
 wordMain = Dispatch('Word.Application')
 # 新建word文档
 # doc = word.Documents.Add()
 
-hasHeader = False
-hasFooter = False
 
 currrent_path = os.getcwd()
 
@@ -21,6 +30,7 @@ docMain.Activate()
 
 # Accept all revisions
 wordMain.ActiveDocument.Revisions.AcceptAll()
+
 
 # 修改所有表格样式为三线表
 def tableFormat():
@@ -88,24 +98,29 @@ def copyFooter():
     selection.Paste()
     time.sleep(1)
 
-
-
 # 查找是否已经插入过头部了
-mainRange = docMain.Content
+""" mainRange = docMain.Content
 if mainRange.find.Execute('论文题目'):
     hasHeader = True
 
 if mainRange.find.Execute('访谈记录'):
-    hasFooter = True
+    hasFooter = True 
 
-if(hasHeader == False):
+"""
+
+
+if(start_step <= 1):
     tableFormat()
 
-if hasHeader == False:
+if(start_step <= 2):
     copyHeader()
-if hasFooter == False:
+if(start_step <= 3):
     copyFooter()
 
+
+# strHello = "the length of (%s) is %d" %('Hello World',len('Hello World'))
+
+print('尝试插入分页符')
 attempts = 0
 success = False
 
@@ -119,7 +134,7 @@ while attempts < 3 and not success:
         break
     except Exception as e:
         attempts += 1
-        print('获取目录失败 ' + str(attempts) + '次，继续尝试..')
+        print('获取目录失败 %d 次，继续尝试..' %(attempts))
         # 暂停0.5秒
         time.sleep(0.5)
 
@@ -132,7 +147,7 @@ if toc_count == 0 and ignoreOutline == False:
     print('还没有目录')
     # for i, p in enumerate(docMain.Paragraphs):  # 遍历word中的内容
     for i in range(100):
-        print('查找插入目录的段落...' + str(i))
+        print('查找插入目录的段落%d...' %(i))
         tempParagraph = docMain.Paragraphs[i]
         if '目录占位符' in tempParagraph.Range.Text:
             print('正在生成目录...')   
@@ -163,7 +178,7 @@ if toc_count == 0 and ignoreOutline == False:
 
 try:
     for i, p in enumerate(docMain.Paragraphs):  # 遍历word中的内容
-        print('寻找分页符，再次查找段落...' + str(i))
+        print('寻找分页符，再次查找段落%d ...'  %(i))
         if '分页占位符' in p.Range.Text:
             # p.Range.Collapse()
             print('正在添加分页符...')
