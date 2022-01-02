@@ -52,7 +52,6 @@ def tableFormat():
 wordMain.Application.Quit()
 sys.exit(0)  """
 
-selection = wordMain.Selection
 
 # 复制header文件并插入到头部
 def copyHeader():
@@ -63,8 +62,9 @@ def copyHeader():
     doc_header.Content.Copy()
     time.sleep(2)
     doc_header.Close()
+    time.sleep(1)
 
-    # selection = wordMain.Selection
+    selection = wordMain.Selection
     # selection.HomeKey(6, 0)
     # selection.InsertBreak()
     selection.HomeKey(6, 0)
@@ -72,6 +72,16 @@ def copyHeader():
     selection.Paste()
     time.sleep(1)
 
+# 插入页眉
+def setPageHeader():
+    doc = wordMain.ActiveDocument       
+    sections = doc.Sections
+    for section in sections:
+
+        headersCollection = section.Headers
+
+        for header in headersCollection:
+            header.Range.Text = "基于IPA分析的杭州HT酒店感知服务质量提升研究"
 
 # 复制footer文件并插入到尾部
 def copyFooter():
@@ -84,11 +94,12 @@ def copyFooter():
     time.sleep(2)
     # 关闭小文件
     doc_footer.Close()
+    time.sleep(1)
 
     # doc1.Range().Select()
     # doc.myRange.Selection.Paste()
 
-    # selection = wordMain.Selection
+    selection = wordMain.Selection
     # selection.MoveRight(1, docMain.Content.End) # 将光标移动到文末，就这一步试了我两个多小时
     # 使用EndKey更快一些
     time.sleep(0.5)
@@ -120,7 +131,27 @@ if(start_step <= 3):
 
 # strHello = "the length of (%s) is %d" %('Hello World',len('Hello World'))
 
-print('尝试插入分页符')
+
+
+
+# 插入分节符
+lst = iter(range(100))
+for i in lst:
+    print('查找分节符的段落%d...' %(i))
+    tempParagraph = docMain.Paragraphs[i]
+    if '分节符在下一页占位符' in tempParagraph.Range.Text:
+        print('正在插入分节符...')
+        tempParagraph.Range.InsertBreak(2)
+        # tempParagraph.Delete()
+        tempParagraph.Range.InsertBreak(6)
+        time.sleep(0.5)
+        # lst.__next__() # 跳过下次循环
+
+time.sleep(1)
+
+
+
+print('尝试插入目录')
 attempts = 0
 success = False
 
@@ -176,6 +207,9 @@ if toc_count == 0 and ignoreOutline == False:
     toc.Update() """
 
 
+
+
+# 插入分页符
 try:
     for i, p in enumerate(docMain.Paragraphs):  # 遍历word中的内容
         print('寻找分页符，再次查找段落%d ...'  %(i))
@@ -184,9 +218,12 @@ try:
             print('正在添加分页符...')
             p.Range.InsertBreak(7)
             time.sleep(0.5)
+            continue
 except Exception as e:
     print('插入分页符失败')
     print(e)
+
+time.sleep(0.5)
 
 
 if(ignoreOutline == False and toc_count > 0):
@@ -200,3 +237,4 @@ time.sleep(2)
 
 docMain.Close(False)
 wordMain.Application.Quit()
+
