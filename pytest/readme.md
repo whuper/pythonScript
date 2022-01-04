@@ -1,3 +1,9 @@
+
+
+pip3 install python-docx
+
+
+
 https://www.cnblogs.com/deepwaterplan/articles/6664796.html
 
 ### Python操作Word（Win32com）

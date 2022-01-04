@@ -6,8 +6,12 @@ import win32com.client
 from win32com.client import Dispatch, DispatchEx
 
 
+def print_obj(obj): 
+  print('\n'.join(['%s:%s' % item for item in obj.__dict__.items()]))
+
+
 try:
- # 脚本名后面接收一个参数，通过sys.argv[1] 获取，参数为1(默认，number)，2，3，4, 等于4的时候会从 【插入目录，分页符】开始
+ # 脚本名后面接收一个参数，通过sys.argv[1] 获取，参数为1(默认，number)，2，3，4, 等于4的时候会从 【插入目录，分页符】开始, 5的时候从页眉页脚开始
   start_step = int(sys.argv[1])
 except:
   start_step = 1
@@ -23,7 +27,7 @@ wordMain = Dispatch('Word.Application')
 
 currrent_path = os.getcwd()
 
-wordMain.Visible = True
+wordMain.Visible = False
 # print(os.getcwd())
 docMain = wordMain.Documents.Open(currrent_path + "/paper_part1.docx")
 docMain.Activate()
@@ -50,7 +54,7 @@ def tableFormat():
 
 """ docMain.Close(False)
 wordMain.Application.Quit()
-sys.exit(0)  """
+sys.exit(0) """
 
 
 # 复制header文件并插入到头部
@@ -77,9 +81,7 @@ def setPageHeader():
     doc = wordMain.ActiveDocument       
     sections = doc.Sections
     for section in sections:
-
         headersCollection = section.Headers
-
         for header in headersCollection:
             header.Range.Text = "基于IPA分析的杭州HT酒店感知服务质量提升研究"
 
@@ -150,7 +152,6 @@ for i in lst:
 time.sleep(1)
 
 
-
 print('尝试插入目录')
 attempts = 0
 success = False
@@ -207,8 +208,6 @@ if toc_count == 0 and ignoreOutline == False:
     toc.Update() """
 
 
-
-
 # 插入分页符
 try:
     for i, p in enumerate(docMain.Paragraphs):  # 遍历word中的内容
@@ -231,6 +230,16 @@ if(ignoreOutline == False and toc_count > 0):
     # 再更新一下目录，不然有时候没有...引导线
     outline = docMain.TablesOfContents(1)
     outline.Update()
+
+wordMain.ActiveDocument.Save()
+time.sleep(2)
+
+
+# 为每一节设置页眉和页脚
+AllSections = wordMain.ActiveDocument.Sections
+sectionQuantity = len(AllSections)
+print("共有 %d 节" %(sectionQuantity))
+
 
 wordMain.ActiveDocument.Save()
 time.sleep(2)
