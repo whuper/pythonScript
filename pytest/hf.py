@@ -1,3 +1,6 @@
+import os
+import sys
+import time
 from docx import Document
 
 doc = Document('paper_part1.docx')
@@ -16,4 +19,9 @@ def setHFooter():
 
 setHFooter()
 
-doc.save('paper_part1.docx')
+doc.save('20020181225-王文豪.docx')
+
+# print('正在设置页眉...')
+# time.sleep(3)
+
+# os.system('python updaterHeader.py')

@@ -76,15 +76,6 @@ def copyHeader():
     selection.Paste()
     time.sleep(1)
 
-# 插入页眉
-def setPageHeader():
-    doc = wordMain.ActiveDocument       
-    sections = doc.Sections
-    for section in sections:
-        headersCollection = section.Headers
-        for header in headersCollection:
-            header.Range.Text = "基于IPA分析的杭州HT酒店感知服务质量提升研究"
-
 # 复制footer文件并插入到尾部
 def copyFooter():
     word2 = win32com.client.DispatchEx('Word.Application')
@@ -247,3 +238,8 @@ time.sleep(2)
 docMain.Close(False)
 wordMain.Application.Quit()
 
+
+print('正在调用python-docx脚本...')
+time.sleep(1)
+# 调用py-docx 取消"链接到前一页页眉
+os.system('python hf.py')
